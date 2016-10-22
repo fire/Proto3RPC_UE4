@@ -115,15 +115,8 @@ extern ExplicitlyConstructed< ::std::string> fixed_address_empty_string;
 LIBPROTOBUF_EXPORT extern ProtobufOnceType empty_string_once_init_;
 LIBPROTOBUF_EXPORT void InitEmptyString();
 
-
-LIBPROTOBUF_EXPORT inline const ::std::string& GetEmptyStringAlreadyInited() {
-  return fixed_address_empty_string.get();
-}
-
-LIBPROTOBUF_EXPORT inline const ::std::string& GetEmptyString() {
-  ::google::protobuf::GoogleOnceInit(&empty_string_once_init_, &InitEmptyString);
-  return GetEmptyStringAlreadyInited();
-}
+LIBPROTOBUF_EXPORT const ::std::string& GetEmptyStringAlreadyInited();
+LIBPROTOBUF_EXPORT const ::std::string& GetEmptyString();
 
 LIBPROTOBUF_EXPORT int StringSpaceUsedExcludingSelf(const string& str);
 
