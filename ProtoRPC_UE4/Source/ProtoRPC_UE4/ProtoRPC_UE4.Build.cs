@@ -5,28 +5,28 @@ using UnrealBuildTool;
 
 public class ProtoRPC_UE4 : ModuleRules
 {
-	public ProtoRPC_UE4(TargetInfo Target)
-	{
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
-		//PrivateIncludePathModulesNames.AddRange(new string[] { "HTTP" });
-		PrivateDependencyModuleNames.AddRange(new string[] { "HTTP" });
+    public ProtoRPC_UE4(TargetInfo Target)
+    {
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
+        //PrivateIncludePathModulesNames.AddRange(new string[] { "HTTP" });
+        PrivateDependencyModuleNames.AddRange(new string[] { "HTTP" });
 
-		// Uncomment if you are using Slate UI
-		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
-		
-		// Uncomment if you are using online features
-		PrivateDependencyModuleNames.Add("OnlineSubsystem");
+        // Uncomment if you are using Slate UI
+        // PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
+        
+        // Uncomment if you are using online features
+        PrivateDependencyModuleNames.Add("OnlineSubsystem");
         PrivateDependencyModuleNames.Add("OnlineSubsystemNull");
-		// if ((Target.Platform == UnrealTargetPlatform.Win32) || (Target.Platform == UnrealTargetPlatform.Win64))
-		// {
-		//		if (UEBuildConfiguration.bCompileSteamOSS == true)
-		//		{
-		//			DynamicallyLoadedModuleNames.Add("OnlineSubsystemSteam");
-		//		}
-		// }
+        // if ((Target.Platform == UnrealTargetPlatform.Win32) || (Target.Platform == UnrealTargetPlatform.Win64))
+        // {
+        //        if (UEBuildConfiguration.bCompileSteamOSS == true)
+        //        {
+        //            DynamicallyLoadedModuleNames.Add("OnlineSubsystemSteam");
+        //        }
+        // }
 
-        	// LoadThirdParty(Target);
-	}
+            // LoadThirdParty(Target);
+    }
 
     private bool LoadThirdParty(TargetInfo Target) {
         bool isLibrarySupported = false;
@@ -54,7 +54,7 @@ public class ProtoRPC_UE4 : ModuleRules
 
     private string ModulePath {
         get {
-            return Path.GetDirectoryName(RulesCompiler.GetModuleFilename(this.GetType().Name)); 
+            return Path.GetDirectoryName(ModuleDirectory); 
         }
     }
 
