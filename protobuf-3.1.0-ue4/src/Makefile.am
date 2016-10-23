@@ -52,7 +52,7 @@ nobase_dist_proto_DATA = google/protobuf/descriptor.proto     \
 
 # Not sure why these don't get cleaned automatically.
 clean-local:
-	rm -f *.loT
+    rm -f *.loT
 
 CLEANFILES = $(protoc_outputs) unittest_proto_middleman \
              testzip.jar testzip.list testzip.proto testzip.zip \
@@ -167,6 +167,7 @@ nobase_include_HEADERS =                                        \
   google/protobuf/compiler/python/python_generator.h            \
   google/protobuf/compiler/ruby/ruby_generator.h                \
   google/protobuf/util/type_resolver.h                          \
+  google/protobuf/util/windows_util.h                           \
   google/protobuf/util/field_comparator.h                       \
   google/protobuf/util/field_mask_util.h                        \
   google/protobuf/util/json_util.h                              \
@@ -297,7 +298,9 @@ libprotobuf_la_SOURCES =                                       \
   google/protobuf/util/json_util.cc                            \
   google/protobuf/util/message_differencer.cc                  \
   google/protobuf/util/time_util.cc                            \
-  google/protobuf/util/type_resolver_util.cc
+  google/protobuf/util/type_resolver_util.cc                   \
+  google/protobuf/util/windows_util.cc
+
 
 nodist_libprotobuf_la_SOURCES = $(nodist_libprotobuf_lite_la_SOURCES)
 
@@ -664,8 +667,8 @@ BUILT_SOURCES = $(protoc_outputs)
 if USE_EXTERNAL_PROTOC
 
 unittest_proto_middleman: $(protoc_inputs)
-	$(PROTOC) -I$(srcdir) --cpp_out=. $^
-	touch unittest_proto_middleman
+    $(PROTOC) -I$(srcdir) --cpp_out=. $^
+    touch unittest_proto_middleman
 
 else
 
@@ -673,8 +676,8 @@ else
 # relative to srcdir, which may not be the same as the current directory when
 # building out-of-tree.
 unittest_proto_middleman: protoc$(EXEEXT) $(protoc_inputs)
-	oldpwd=`pwd` && ( cd $(srcdir) && $$oldpwd/protoc$(EXEEXT) -I. --cpp_out=$$oldpwd $(protoc_inputs) )
-	touch unittest_proto_middleman
+    oldpwd=`pwd` && ( cd $(srcdir) && $$oldpwd/protoc$(EXEEXT) -I. --cpp_out=$$oldpwd $(protoc_inputs) )
+    touch unittest_proto_middleman
 
 endif
 
@@ -852,14 +855,14 @@ endif
 # code is free from warnings. We have to be more pedantic about these
 # files because they are compiled by users with different compiler flags.
 no_warning_test.cc:
-	echo "// Generated from Makefile.am" > no_warning_test.cc
-	for FILE in $(nobase_include_HEADERS); do \
-	  if ! echo $${FILE} | grep "atomicops"; then \
-	    echo "#include <$${FILE}>" >> no_warning_test.cc; \
-	  fi \
-	done
-	echo "#include <gtest/gtest.h>" >> no_warning_test.cc
-	echo "TEST(NoWarningTest, Empty) {}" >> no_warning_test.cc
+    echo "// Generated from Makefile.am" > no_warning_test.cc
+    for FILE in $(nobase_include_HEADERS); do \
+      if ! echo $${FILE} | grep "atomicops"; then \
+        echo "#include <$${FILE}>" >> no_warning_test.cc; \
+      fi \
+    done
+    echo "#include <gtest/gtest.h>" >> no_warning_test.cc
+    echo "TEST(NoWarningTest, Empty) {}" >> no_warning_test.cc
 
 no_warning_test_LDADD = $(PTHREAD_LIBS) libprotobuf.la      \
                         ../gmock/gtest/lib/libgtest.la      \
